@@ -32,7 +32,7 @@ public class DataSourceConfig {
 
 @Primary
 @Bean
-@ConfigurationProperties(prefix = "spring.datasource.druid")
+@ConfigurationProperties(prefix = "spring.datasource.druid.one")
 public DataSource dataSourceMysql(){
 	System.out.println("one d");
     return DruidDataSourceBuilder.create().build();

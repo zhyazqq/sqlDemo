@@ -30,7 +30,7 @@ public class OracleDataSourceConfig {
 	 */
 
 @Bean
-@ConfigurationProperties(prefix ="spring.datasource.druid")
+@ConfigurationProperties(prefix ="spring.datasource.druid.two")
 public DataSource dataSourceOrcale(){
 	System.out.println("two d");
     return DruidDataSourceBuilder.create().build();
