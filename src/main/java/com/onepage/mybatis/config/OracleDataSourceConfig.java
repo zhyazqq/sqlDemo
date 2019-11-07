@@ -1,0 +1,72 @@
+package com.onepage.mybatis.config;
+
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+@Configuration
+
+public class OracleDataSourceConfig {
+
+	@Value("${mybatis.mapper-locations}")
+	private String mapperLocations;
+	/*
+	 * @Value("${mybatis.mapper-location}") private String mapperLocationsOrcale;
+	 */
+
+@Bean
+@ConfigurationProperties(prefix ="spring.datasource.druid")
+public DataSource dataSourceOrcale(){
+	System.out.println("two d");
+    return DruidDataSourceBuilder.create().build();
+}
+
+@Bean
+public DatabaseIdProvider databaseIdProviderOracle(){ 
+	  DatabaseIdProvider databaseIdProvider = new VendorDatabaseIdProvider(); 
+	  Properties p = new Properties(); 
+	  
+	  p.setProperty("MySQL","mysql"); 
+	  p.setProperty("Oracle", "oracle"); 
+	  databaseIdProvider.setProperties(p); return databaseIdProvider; 
+	  }
+
+@Bean
+public SqlSessionFactoryBean sqlSessionFactoryBeanOracle() throws Exception {
+    SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+  
+    factoryBean.setDataSource(this.dataSourceOrcale());
+    factoryBean.setVfs(SpringBootVFS.class);
+    System.out.println("two s");
+    factoryBean.setDatabaseIdProvider(this.databaseIdProviderOracle());
+		/*
+		 * if(this.databaseIdProviderOracle()!=null) {
+		 * factoryBean.getObject().getConfiguration().setDatabaseId(this.
+		 * databaseIdProviderOracle().getDatabaseId(this.dataSourceOrcale()));
+		 * 
+		 * }
+		 */
+    factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/mysql/*Mapper.xml"));
+    return factoryBean;
+}
+@Bean
+public JdbcTemplate jdbcTemplateOrcale(){
+	System.out.println("two t");
+    return new JdbcTemplate(this.dataSourceOrcale());
+}
+}

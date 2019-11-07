@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- --> 
+<configuration>
+    <typeAliases>
+        <typeAlias alias="Phone" type="com.onepage.mybatis.entity.Phone" />
+    </typeAliases>
+    <!-- <properties resource="application.properties" />
+	<environments default="mysql"> -->
+	<!-- <environment id="mysql">
+		<transactionManager type="JDBC"/>
+		<dataSource type="POOLED">
+			<property name="driver" value="${mysql.datasource.driver}"/>
+			<property name="url" value="${mysql.datasource.url}"/>
+			<property name="username" value="${mysql.datasource.username}"/>
+			<property name="password" value="${mysql.datasource.password}"/>
+		</dataSource>
+		</environment> -->
+		<!-- <environment id="orcale">
+		<transactionManager type="JDBC"/>
+		<dataSource type="POOLED">
+			<property name="driver" value="${oracle.datasource.driver}"/>
+			<property name="url" value="${oracle.datasource.url}"/>
+			<property name="username" value="${oracle.datasource.username}"/>
+			<property name="password" value="${oracle.datasource.password}"/>
+		</dataSource>
+	</environment> -->
+	<!-- </environments> -->
+  <databaseIdProvider type="DB_VENDOR">
+        <property name="MySQL" value="mysql" />
+        <property name="Oracle" value="oracle" />
+    </databaseIdProvider> 
+</configuration> 
+
+
