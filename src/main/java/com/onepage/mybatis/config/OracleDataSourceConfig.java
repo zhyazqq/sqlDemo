@@ -6,7 +6,9 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +22,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 @Configuration
-
+@MapperScan(basePackages = "com.onepage.mybatis.mapper.oracle",sqlSessionTemplateRef="SqtTwo")
 public class OracleDataSourceConfig {
 
 	@Value("${mybatis.mapper-locations}")
@@ -29,7 +31,8 @@ public class OracleDataSourceConfig {
 	 * @Value("${mybatis.mapper-location}") private String mapperLocationsOrcale;
 	 */
 
-@Bean
+
+@Bean(name="TwoDataSource")
 @ConfigurationProperties(prefix ="spring.datasource.druid.two")
 public DataSource dataSourceOrcale(){
 	System.out.println("two d");
@@ -46,11 +49,11 @@ public DatabaseIdProvider databaseIdProviderOracle(){
 	  databaseIdProvider.setProperties(p); return databaseIdProvider; 
 	  }
 
-@Bean
-public SqlSessionFactoryBean sqlSessionFactoryBeanOracle() throws Exception {
+@Bean(name="TwoSqf")
+public SqlSessionFactory sqlSessionFactoryBeanOracle(@Qualifier("TwoDataSource") DataSource dataSource) throws Exception {
     SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
   
-    factoryBean.setDataSource(this.dataSourceOrcale());
+    factoryBean.setDataSource(dataSource);
     factoryBean.setVfs(SpringBootVFS.class);
     System.out.println("two s");
     factoryBean.setDatabaseIdProvider(this.databaseIdProviderOracle());
@@ -62,11 +65,11 @@ public SqlSessionFactoryBean sqlSessionFactoryBeanOracle() throws Exception {
 		 * }
 		 */
     factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/mysql/*Mapper.xml"));
-    return factoryBean;
+    return factoryBean.getObject();
 }
-@Bean
-public JdbcTemplate jdbcTemplateOrcale(){
+@Bean("SqtTwo")
+public SqlSessionTemplate jdbcTemplateOrcale(@Qualifier("TwoSqf")SqlSessionFactory sessionFactory){
 	System.out.println("two t");
-    return new JdbcTemplate(this.dataSourceOrcale());
+    return new SqlSessionTemplate(sessionFactory);
 }
 }

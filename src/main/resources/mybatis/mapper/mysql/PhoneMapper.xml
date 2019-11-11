@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.onepage.mybatis.mapper.PhoneMapper" >
+<mapper namespace="com.onepage.mybatis.mapper.mysql.PhoneMapper" >
 
  <select id="finaAll" resultType="com.onepage.mybatis.entity.Phone" databaseId="mysql">
 	SELECT * FROM phone;
 </select>
  
 
- <select id="finaAllOracle" resultType="com.onepage.mybatis.entity.Phone" databaseId="oracle">
+<!--  <select id="finaAllOracle" resultType="com.onepage.mybatis.entity.Phone" databaseId="oracle">
 	SELECT * FROM phone
-</select> 
+</select>  -->
 </mapper>
 
 

@@ -24,8 +24,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 //import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-@SpringBootApplication(exclude = MybatisAutoConfiguration.class)
-@MapperScan(basePackages = "com.onepage.mybatis.mapper")
+@SpringBootApplication
+//@MapperScan(basePackages = "com.onepage.mybatis.mapper")
 public class App {
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);

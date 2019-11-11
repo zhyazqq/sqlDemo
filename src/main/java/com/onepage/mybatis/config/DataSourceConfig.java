@@ -6,7 +6,9 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +22,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 @Configuration
-
+@MapperScan(basePackages = "com.onepage.mybatis.mapper.mysql",sqlSessionTemplateRef="SqtOne")
 public class DataSourceConfig {
 
 	@Value("${mybatis.mapper-locations}")
@@ -31,7 +33,7 @@ public class DataSourceConfig {
 
 
 @Primary
-@Bean
+@Bean(name="oneDataSource")
 @ConfigurationProperties(prefix = "spring.datasource.druid.one")
 public DataSource dataSourceMysql(){
 	System.out.println("one d");
@@ -52,23 +54,23 @@ public DataSource dataSourceMysql(){
 	
 
 @Primary
-@Bean
-public SqlSessionFactoryBean sqlSessionFactoryBeanMySQL() throws Exception {
+@Bean(name="oneSqf")
+public SqlSessionFactory sqlSessionFactoryBeanMySQL(@Qualifier("oneDataSource")DataSource dataSource) throws Exception {
     SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-    factoryBean.setDataSource(this.dataSourceMysql());
+    factoryBean.setDataSource(dataSource);
     System.out.println("one s");
     factoryBean.setVfs(SpringBootVFS.class);
     
     factoryBean.setDatabaseIdProvider(this.databaseIdProvider());
     factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/mysql/*.xml"));
 //    factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
-    return factoryBean;
+    return factoryBean.getObject();
 }
 @Primary
-@Bean
-public JdbcTemplate jdbcTemplateMysql (){
+@Bean(name="SqtOne")
+public SqlSessionTemplate jdbcTemplateMysql (@Qualifier("oneSqf")SqlSessionFactory sessionFactory){
 	System.out.println("one t");
-    return new JdbcTemplate(this.dataSourceMysql());
+    return new SqlSessionTemplate(sessionFactory);
 }
 
 }
