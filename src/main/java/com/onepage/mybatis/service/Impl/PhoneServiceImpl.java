@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.onepage.mybatis.entity.Phone;
-import com.onepage.mybatis.mapper.mysql.PhoneMapper;
+import com.onepage.mybatis.mapper.PhoneMapper;
 import com.onepage.mybatis.service.PhoneService;
 
 
@@ -18,8 +18,6 @@ import com.onepage.mybatis.service.PhoneService;
 public class PhoneServiceImpl implements PhoneService {
 	@Resource
 	private PhoneMapper mapper;
-	@Resource
-	private com.onepage.mybatis.mapper.oracle.PhoneMapper mapperOraMapper;
 
 public List<Phone> findAll() {
 		// TODO Auto-generated method stub
@@ -27,7 +25,7 @@ public List<Phone> findAll() {
 	}
 public List<Phone> findAllOracle() {
 		System.out.println("service");
-		return mapperOraMapper.findAllOracle();
+		return mapper.findAllOracle();
 	}
  
 	

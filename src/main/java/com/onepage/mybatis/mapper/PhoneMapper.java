@@ -1,4 +1,4 @@
-package com.onepage.mybatis.mapper.mysql;
+package com.onepage.mybatis.mapper;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.onepage.mybatis.entity.Phone;
 
-
-public interface PhoneMapper {
-	@Qualifier("SqtOne")
+@Mapper
+public interface PhoneMapper {	
 	List<Phone> finaAll();
+	List<Phone> findAllOracle();
 }
