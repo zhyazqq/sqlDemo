@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
-<!-- --> 
+<!--配置别名文件 --> 
 <configuration>
     <typeAliases>
-        <typeAlias alias="Phone" type="com.onepage.mybatis.entity.Phone" />
+        <typeAlias alias="phone" type="com.onepage.mybatis.entity.Phone" />
     </typeAliases>
-  <databaseIdProvider type="DB_VENDOR">
-        <property name="MySQL" value="mysql" />
-        <property name="Oracle" value="oracle" />
-    </databaseIdProvider> 
 </configuration> 
 
 

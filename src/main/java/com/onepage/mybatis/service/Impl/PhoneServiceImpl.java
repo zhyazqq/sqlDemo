@@ -23,11 +23,4 @@ public List<Phone> findAll() {
 		// TODO Auto-generated method stub
 		return mapper.finaAll();
 	}
-public List<Phone> findAllOracle() {
-		System.out.println("service");
-		return mapper.findAllOracle();
-	}
- 
-	
-
 }
