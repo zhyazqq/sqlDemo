@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,4 +24,8 @@ public class PhoneController {
 	public List<Phone> findAll() {
 		return service.findAll();
 	}  
+	@RequestMapping(value = "/insert",method = RequestMethod.POST)
+	public void insert(@RequestBody Phone phone) {
+		 service.insert(phone);
+	} 
 }

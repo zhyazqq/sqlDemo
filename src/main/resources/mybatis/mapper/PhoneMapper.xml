@@ -8,6 +8,9 @@
 <select id="finaAll" resultType="phone" databaseId="mysql">
 	SELECT * FROM phone where id=2
 </select>  
+<insert id="insert" parameterType="phone" databaseId="mysql">
+	INSERT INTO phone(name,type,year,time) VALUES(#{name},#{type},#{year},#{time});
+</insert>
 </mapper>
 
 
